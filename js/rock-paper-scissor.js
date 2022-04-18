@@ -19,11 +19,11 @@ function playRound(playerSelection, computerSelection) {
     const playerWin = getWinningOption(computerSelection);
 
     if(playerSelection == computerSelection) {
-        return "Draw";
+        return "draw";
     } else if (playerSelection == playerWin) {
-        return `You Win! ${playerSelection} beats ${computerSelection}`;
+        return "player"
     } else {
-        return `You Lose! ${computerSelection} beats ${playerSelection}`;
+        return "computer"
     }
 }
 
@@ -45,8 +45,41 @@ function getWinningOption(selection) {
     }
 }
 
-const playerSelection = prompt("Enter Rock, Paper, or Scissors:").toLocaleLowerCase();
-const computerSelection = computerPlay();
-console.log("Player selection: ", playerSelection);
-console.log("Computer selection: ", computerSelection);
-console.log(playRound(playerSelection, computerSelection));
+/**
+ * Plays 5 rounds, keeps score and determines the winner of the game
+ */
+function game() {
+    let playerScore = 0;
+    let computerScore = 0;
+
+    for(let i = 0; i < 5; i++) {
+        const playerSelection = prompt("Enter Rock, Paper, or Scissors:").toLocaleLowerCase();
+        const computerSelection = computerPlay();
+
+        let winner = playRound(playerSelection, computerSelection);
+
+        switch(winner) {
+            case "player":
+                playerScore++;
+                console.log(`You Win! ${playerSelection} beats ${computerSelection}`);
+                break;
+            case "computer":
+                computerScore++;
+                console.log(`You Lose! ${computerSelection} beats ${playerSelection}`);
+                break;
+            case "draw":
+                console.log("Draw");
+                break;
+        }
+    }
+
+    if(playerScore > computerScore) {
+        console.log("You won the game!");
+    } else if (computerScore > playerScore) {
+        console.log("You lost the game");
+    } else {
+        console.log("Draw");
+    }
+}
+
+game();
