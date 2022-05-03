@@ -82,4 +82,11 @@ function game() {
     }
 }
 
-game();
+const optionButtons = document.querySelectorAll('.select');
+
+optionButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+        let computerSelection = computerPlay();
+        console.log(playRound(button.id, computerSelection));
+    });
+})
