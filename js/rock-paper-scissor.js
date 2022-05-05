@@ -1,4 +1,7 @@
 const OPTIONS = ["rock", "paper", "scissors"]
+let playerScore = 0;
+let computerScore = 0;
+let roundResult = '';
 
 /** 
  *  Randomly generate computer choice. 
@@ -19,12 +22,15 @@ function playRound(playerSelection, computerSelection) {
     const playerWin = getWinningOption(computerSelection);
 
     if(playerSelection == computerSelection) {
-        return "draw";
+        roundResult = "Draw";
     } else if (playerSelection == playerWin) {
-        return "player"
+        playerScore++;
+        roundResult = "Player";
     } else {
-        return "computer"
+        computerScore++;
+        roundResult = "Computer";
     }
+    updateScore();
 }
 
 /**
@@ -82,11 +88,37 @@ function game() {
     }
 }
 
+/**
+ * Updates result display
+ */
+function updateScore() {
+    playerScoreDisplay.textContent = `Player Score: ${playerScore}`;
+    computerScoreDisplay.textContent = `Computer Score: ${computerScore}`;
+    roundResultDisplay.textContent = `Round Winner: ${roundResult}`
+}
+
+/**
+ * Determines the option that will defeat the selection
+ * 
+ * @param {object} parent element object that field will be appended to
+ * @return {object} newly created field element object
+ */
+function createResultField(parent) {
+    let field = document.createElement('div');
+    parent.appendChild(field);
+    return field;
+}
+
 const optionButtons = document.querySelectorAll('.select');
+const resultsView = document.querySelector('.results');
+const playerScoreDisplay = createResultField(resultsView);
+const computerScoreDisplay = createResultField(resultsView);
+const roundResultDisplay = createResultField(resultsView);
+updateScore();
 
 optionButtons.forEach((button) => {
     button.addEventListener('click', () => {
         let computerSelection = computerPlay();
-        console.log(playRound(button.id, computerSelection));
+        playRound(button.id, computerSelection);
     });
 })
