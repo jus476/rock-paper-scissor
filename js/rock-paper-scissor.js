@@ -30,6 +30,15 @@ function playRound(playerSelection, computerSelection) {
         computerScore++;
         roundResult = "Computer";
     }
+    if(playerScore >= 5) {
+        alert("Player Wins!");
+        resetGame();
+    } else if (computerScore >= 5) {
+        alert("Computer Wins!");
+        resetGame();
+    } else {
+        // No winner yet; keep playing
+    }
     updateScore();
 }
 
@@ -52,49 +61,21 @@ function getWinningOption(selection) {
 }
 
 /**
- * Plays 5 rounds, keeps score and determines the winner of the game
- */
-function game() {
-    let playerScore = 0;
-    let computerScore = 0;
-
-    for(let i = 0; i < 5; i++) {
-        const playerSelection = prompt("Enter Rock, Paper, or Scissors:").toLocaleLowerCase();
-        const computerSelection = computerPlay();
-
-        let winner = playRound(playerSelection, computerSelection);
-
-        switch(winner) {
-            case "player":
-                playerScore++;
-                console.log(`You Win! ${playerSelection} beats ${computerSelection}`);
-                break;
-            case "computer":
-                computerScore++;
-                console.log(`You Lose! ${computerSelection} beats ${playerSelection}`);
-                break;
-            case "draw":
-                console.log("Draw");
-                break;
-        }
-    }
-
-    if(playerScore > computerScore) {
-        console.log("You won the game!");
-    } else if (computerScore > playerScore) {
-        console.log("You lost the game");
-    } else {
-        console.log("Draw");
-    }
-}
-
-/**
  * Updates result display
  */
 function updateScore() {
     playerScoreDisplay.textContent = `Player Score: ${playerScore}`;
     computerScoreDisplay.textContent = `Computer Score: ${computerScore}`;
     roundResultDisplay.textContent = `Round Winner: ${roundResult}`
+}
+
+/**
+ * Reset scores
+ */
+function resetGame() {
+    playerScore = 0;
+    computerScore = 0;
+    roundResult = '';
 }
 
 /**
